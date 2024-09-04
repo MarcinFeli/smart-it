@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '../store/usersSlice'
 import { RootState } from '../store/store'
@@ -7,6 +7,7 @@ import { FaUser } from 'react-icons/fa'
 
 export default function Table({ users }: TableProps) {
 	const dispatch = useDispatch()
+	const [isEmpty, setIsEmpty] = useState(false)
 	const filter = useSelector((state: RootState) => state.users.filter)
 
 	const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,9 @@ export default function Table({ users }: TableProps) {
 			field.toLowerCase().includes(filter.toLowerCase())
 		)
 	)
+	useEffect(() => {
+		setIsEmpty(filteredUsers.length === 0)
+	}, [filteredUsers])
 
 	return (
 		<div className='w-full px-4 sm:px-6 lg:px-16'>
@@ -60,21 +64,29 @@ export default function Table({ users }: TableProps) {
 						</tr>
 					</thead>
 					<tbody className='divide-y divide-gray-200 bg-white'>
-						{filteredUsers.map(user => (
-							<tr key={user.email}>
-								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0'>
-									{user.name}
-									<dl className='font-normal lg:hidden'>
-										<dd className='mt-1 truncate text-gray-700'>{user.username}</dd>
-										<dt className='sr-only sm:hidden'>Email</dt>
-										<dd className='mt-1 truncate text-gray-500 sm:hidden'>{user.email}</dd>
-									</dl>
+						{isEmpty ? (
+							<tr>
+								<td colSpan={4} className='py-4 text-center text-sm font-medium text-gray-500'>
+									User not found
 								</td>
-								<td className='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>{user.username}</td>
-								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>{user.email}</td>
-								<td className='px-3 py-4 text-sm text-gray-500'>{user.number}</td>
 							</tr>
-						))}
+						) : (
+							filteredUsers.map(user => (
+								<tr key={user.email}>
+									<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0'>
+										{user.name}
+										<dl className='font-normal lg:hidden'>
+											<dd className='mt-1 truncate text-gray-700'>{user.username}</dd>
+											<dt className='sr-only sm:hidden'>Email</dt>
+											<dd className='mt-1 truncate text-gray-500 sm:hidden'>{user.email}</dd>
+										</dl>
+									</td>
+									<td className='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>{user.username}</td>
+									<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>{user.email}</td>
+									<td className='px-3 py-4 text-sm text-gray-500'>{user.number}</td>
+								</tr>
+							))
+						)}
 					</tbody>
 				</table>
 			</div>
