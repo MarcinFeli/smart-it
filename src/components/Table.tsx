@@ -35,7 +35,7 @@ export default function Table({ users }: TableProps) {
 				<div className='sm:flex-auto'>
 					<h1 className='text-base font-semibold leading-6 text-gray-900'>Users</h1>
 					<p className='mt-2 text-sm text-gray-700'>
-						A list of all the users including their name, username, email and number.
+						A list of all the users including their name, username, email and phone.
 					</p>
 				</div>
 				<input
@@ -65,7 +65,7 @@ export default function Table({ users }: TableProps) {
 								Email
 							</th>
 							<th scope='col' className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'>
-								Number
+								Phone
 							</th>
 						</tr>
 					</thead>
