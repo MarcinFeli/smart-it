@@ -2,18 +2,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '../store/usersSlice'
 import { RootState } from '../store/store'
-
-interface User {
-	id: number
-	name: string
-	username: string
-	email: string
-	number: string
-}
-
-interface TableProps {
-	users: User[]
-}
+import { TableProps } from '../interfaces/interfaces'
+import { FaUser } from 'react-icons/fa'
 
 export default function Table({ users }: TableProps) {
 	const dispatch = useDispatch()
@@ -33,7 +23,7 @@ export default function Table({ users }: TableProps) {
 		<div className='w-full px-4 sm:px-6 lg:px-16'>
 			<div className='sm:flex sm:items-center'>
 				<div className='sm:flex-auto'>
-					<h1 className='text-base font-semibold leading-6 text-gray-900'>Users</h1>
+					<h1 className='text-base font-semibold leading-6 text-gray-900 flex items-center gap-1'><FaUser/> Users</h1>
 					<p className='mt-2 text-sm text-gray-700'>
 						A list of all the users including their name, username, email and phone.
 					</p>
